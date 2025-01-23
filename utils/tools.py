@@ -121,7 +121,3 @@ def adjustment(gt, pred):
 def cal_accuracy(y_pred, y_true):
     return np.mean(y_pred == y_true)
 
-
-
-################################################################
-# def visiual_adjacency_matrix()
