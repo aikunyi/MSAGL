@@ -39,15 +39,12 @@ class Encoder(nn.Module):
             x, attn = attn_layer(x, attn_mask=attn_mask, tau=tau, delta=delta)
             attns.append(attn)
 
-        # concat all the outputs
-        """x = torch.cat(
-            x, dim=1
-        )  # (batch_size, patch_num_1 + patch_num_2 + ... , d_model)"""
-
-        # concat all the routers
-        x = torch.cat([x[:, -1, :].unsqueeze(1) for x in x], dim=1)  # (batch_size, len(patch_len_list), d_model)
-
-        if self.norm is not None:
-            x = self.norm(x)
+        # # concat all the outputs
+        # x = torch.cat(
+        #     x, dim=1
+        # )  # (batch_size, patch_num_1 + patch_num_2 + ... , d_model)
+        #
+        # if self.norm is not None:
+        #     x = self.norm(x)
 
         return x, attns
