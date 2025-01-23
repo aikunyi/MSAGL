@@ -1,4 +1,4 @@
-# MSAGL
+# MSAGL (WWW 2025)
 
 The repo is the official implementation for the paper: "Towards Multi-resolution Spatiotemporal Graph Learning for Medical Time Series Classification".
 
@@ -31,7 +31,7 @@ You can reproduce the experiment results as the following examples:
 
 ```
 bash ./scripts/ADFD_Sample.sh
-bash ./scripts/APAVA-Subject.sh
+bash ./scripts/APAVA_Subject.sh
 ```
 
 
