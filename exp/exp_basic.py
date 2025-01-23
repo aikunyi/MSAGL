@@ -1,35 +1,13 @@
 import os
 import torch
-from models import (
-    Autoformer,
-    Crossformer,
-    FEDformer,
-    Informer,
-    iTransformer,
-    MTST,
-    Nonstationary_Transformer,
-    PatchTST,
-    Reformer,
-    Transformer,
-    Medformer,
-    MSAGL,
-)
+from models import iTransformer, Medformer, MSAGL
 
 
 class Exp_Basic(object):
     def __init__(self, args):
         self.args = args
         self.model_dict = {
-            "Autoformer": Autoformer,
-            "Crossformer": Crossformer,
-            "FEDformer": FEDformer,
-            "Informer": Informer,
             "iTransformer": iTransformer,
-            "MTST": MTST,
-            "Nonstationary_Transformer": Nonstationary_Transformer,
-            "PatchTST": PatchTST,
-            "Reformer": Reformer,
-            "Transformer": Transformer,
             "Medformer": Medformer,
             'MSAGL': MSAGL
         }

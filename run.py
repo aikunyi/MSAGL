@@ -1,10 +1,6 @@
 import argparse
 import os
 import torch
-from exp.exp_long_term_forecasting import Exp_Long_Term_Forecast
-from exp.exp_imputation import Exp_Imputation
-from exp.exp_short_term_forecasting import Exp_Short_Term_Forecast
-from exp.exp_anomaly_detection import Exp_Anomaly_Detection
 from exp.exp_classification import Exp_Classification
 import random
 import numpy as np
@@ -100,7 +96,7 @@ if __name__ == "__main__":
     parser.add_argument("--gpu", type=int, default=0, help="gpu")
     parser.add_argument("--use_multi_gpu", help="use multiple gpus", default=False)
     parser.add_argument("--devices", type=str, default="0, 1, 2, 3", help="device ids of multiple gpus")
-    # parser.add_argument('--devices', type=str, default='0,1', help='device ids of multiple gpus')
+
 
     # de-stationary projector params
     parser.add_argument("--p_hidden_dims", type=int, nargs="+", default=[128, 128], help="hidden layer dimensions of projector (List)")
@@ -118,18 +114,22 @@ if __name__ == "__main__":
     print("Args in experiment:")
     print(args)
 
-    if args.task_name == "long_term_forecast":
-        Exp = Exp_Long_Term_Forecast
-    elif args.task_name == "short_term_forecast":
-        Exp = Exp_Short_Term_Forecast
-    elif args.task_name == "imputation":
-        Exp = Exp_Imputation
-    elif args.task_name == "anomaly_detection":
-        Exp = Exp_Anomaly_Detection
-    elif args.task_name == "classification":
+    # if args.task_name == "long_term_forecast":
+    #     Exp = Exp_Long_Term_Forecast
+    # elif args.task_name == "short_term_forecast":
+    #     Exp = Exp_Short_Term_Forecast
+    # elif args.task_name == "imputation":
+    #     Exp = Exp_Imputation
+    # elif args.task_name == "anomaly_detection":
+    #     Exp = Exp_Anomaly_Detection
+    # elif args.task_name == "classification":
+    #     Exp = Exp_Classification
+    # else:
+    #     Exp = Exp_Long_Term_Forecast
+    #
+    if args.task_name == "classification":
         Exp = Exp_Classification
-    else:
-        Exp = Exp_Long_Term_Forecast
+
 
     if args.is_training:
         for ii in range(args.itr):

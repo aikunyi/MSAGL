@@ -6,9 +6,9 @@ import glob
 import re
 import torch
 from torch.utils.data import Dataset, DataLoader
-from sklearn.preprocessing import StandardScaler
-from utils.timefeatures import time_features
-from data_provider.m4 import M4Dataset, M4Meta
+# from sklearn.preprocessing import StandardScaler
+# from utils.timefeatures import time_features
+# from data_provider.m4 import M4Dataset, M4Meta
 from data_provider.uea import (
     subsample,
     interpolate_missing,
@@ -16,9 +16,9 @@ from data_provider.uea import (
     normalize_batch_ts,
     bandpass_filter_func,
 )
-from sktime.datasets import load_from_tsfile_to_dataframe
+# from sktime.datasets import load_from_tsfile_to_dataframe
 import warnings
-import random
+# import random
 from sklearn.utils import shuffle
 from sklearn.model_selection import train_test_split
 

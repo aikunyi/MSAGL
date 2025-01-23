@@ -324,11 +324,10 @@ class TwoStageAttentionLayer(nn.Module):
         )
 
     def forward(self, x, attn_mask=None, tau=None, delta=None):
-        # print('x', x.shape)
         # Cross Time Stage: Directly apply MSA to each dimension
         batch = x.shape[0]
         time_in = rearrange(x, "b ts_d seg_num d_model -> (b ts_d) seg_num d_model")
-        # print('time_in', time_in.shape)
+
         time_enc, attn = self.time_attention(
             time_in, time_in, time_in, attn_mask=None, tau=None, delta=None
         )
@@ -336,34 +335,32 @@ class TwoStageAttentionLayer(nn.Module):
         dim_in = self.norm1(dim_in)
         dim_in = dim_in + self.dropout(self.MLP1(dim_in))
         dim_in = self.norm2(dim_in)
-        # print('dim_in', dim_in.shape)
 
         # Cross Dimension Stage: use a small set of learnable vectors to aggregate and distribute messages to build the D-to-D connection
         dim_send = rearrange(
             dim_in, "(b ts_d) seg_num d_model -> (b seg_num) ts_d d_model", b=batch
         )
-        # print('dim_send', dim_send.shape)
+
         batch_router = repeat(
             self.router,
             "seg_num factor d_model -> (repeat seg_num) factor d_model",
             repeat=batch,
         )
-        # print('batch_router', batch_router.shape)
+
         dim_buffer, attn = self.dim_sender(
             batch_router, dim_send, dim_send, attn_mask=None, tau=None, delta=None
         )
-        # print('dim_buffer', dim_buffer.shape)
+
         dim_receive, attn = self.dim_receiver(
             dim_send, dim_buffer, dim_buffer, attn_mask=None, tau=None, delta=None
         )
         # dim_receive, attn = self.dim_receiver(dim_send, dim_send, dim_send, attn_mask=None, tau=None, delta=None)
-        # print('dim_receive', dim_receive.shape)
+
         dim_enc = dim_send + self.dropout(dim_receive)
         dim_enc = self.norm3(dim_enc)
         dim_enc = dim_enc + self.dropout(self.MLP2(dim_enc))
         dim_enc = self.norm4(dim_enc)
-        # print('dim_enc', dim_enc.shape)
-        # quit()
+
 
         final_out = rearrange(
             dim_enc, "(b seg_num) ts_d d_model -> b ts_d seg_num d_model", b=batch
@@ -415,7 +412,7 @@ class MedformerLayer(nn.Module):
 
     def forward(self, x, attn_mask=None, tau=None, delta=None):
         attn_mask = attn_mask or ([None] * len(x))
-        # Intra attention
+
         x_intra = []
         attn_out = []
         for x_in, layer, mask in zip(x, self.intra_attentions, attn_mask):
@@ -424,7 +421,7 @@ class MedformerLayer(nn.Module):
             attn_out.append(_attn)
 
         if self.inter_attention is not None:
-            # Inter attention
+
             routers = torch.cat([x[:, -1:] for x in x_intra], dim=1)  # (B, N, D)
             x_inter, attn_inter = self.inter_attention(
                 routers, routers, routers, attn_mask=None, tau=tau, delta=delta
@@ -438,7 +435,6 @@ class MedformerLayer(nn.Module):
             x_out = x_intra
         return x_out, attn_out
 
-##################################################
 class FormerLayer(nn.Module):
     def __init__(self, num_blocks, d_model, n_heads, dropout=0.1, output_attention=False):
         super().__init__()
@@ -472,7 +468,6 @@ class FormerLayer(nn.Module):
 
         return x_out, attn_out
 
-##################################################
 
 class DifferenceAttention(nn.Module):
     def __init__(self, mask_flag=True, factor=5, scale=None, attention_dropout=0.1, output_attention=False):
