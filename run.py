@@ -12,7 +12,7 @@ if __name__ == "__main__":
     parser.add_argument("--task_name", type=str, default="classification")
     parser.add_argument("--is_training", type=int, default=1, help="status")
     parser.add_argument("--model_id", type=str, default="APAVA-Subject", help="model id")
-    parser.add_argument("--model", type=str, default="MSAGL", help="[MSAGL, Medformer, iTransformer]")
+    parser.add_argument("--model", type=str, default="MedGNN", help="[MedGNN, Medformer, iTransformer]")
     parser.add_argument('--checkpoints', type=str, default='./checkpoints/', help='location of model checkpoints')
 
     parser.add_argument("--data", type=str, default="APAVA", help="dataset type")
@@ -35,7 +35,7 @@ if __name__ == "__main__":
     parser.add_argument("--augmentations", type=str, default="none,drop0.35",
                         help="a comma-seperated list of augmentation types (none, jitter or scale). Append numbers to specify the strength of the augmentation, e.g., jitter0.1")
 
-    # MSAGL
+    # MedGNN
     parser.add_argument('--resolution_list', type=str, default="2,4,6,8")
     parser.add_argument('--nodedim', type=int, default=10)
 
