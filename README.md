@@ -1,7 +1,6 @@
-# MSAGL (WWW 2025)
+# MedGNN (WWW 2025)
 
 The repo is the official implementation for the paper: "Towards Multi-resolution Spatiotemporal Graph Learning for Medical Time Series Classification".
-
 
 ## Getting Started
 
@@ -10,8 +9,8 @@ The repo is the official implementation for the paper: "Towards Multi-resolution
 To get started, ensure you have conda installed on your system and follow these steps to set up the environment:
 
 ```
-conda create -n MSAGL python=3.9
-conda activate MSAGL
+conda create -n MedGNN python=3.9
+conda activate MedGNN
 pip install -r requirements.txt
 ```
 
